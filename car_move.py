@@ -181,7 +181,7 @@ def car_move(map_lvl, start, dest):
 
 		current_pts.append(pt)
 		hops+=1
-		if(hops % 30 == 0):
+		if(hops % 15 == 0):
 			print('vectorising')
 			vectorise(current_pts)
 			current_pts = []
@@ -217,10 +217,131 @@ def do_level():
 	get_custom_grid(img_map)
 
 
+def euclid_dist(start, dest):
+	x1, y1 = dest
+	x0, y0 = start
+	return ((x1-x0)**2 + (y1-y0)**2)**0.5
+
+def display_tests(map_color, start, dest):
+	map_level = cv.cvtColor(map_color, cv.COLOR_BGR2GRAY)
+
+	mapcpy = map_color.copy()
+
+	map_level = cv.bitwise_not(map_level)
+
+	map_level = map_level/255
+
+	print('Generating path...')
+	path = astar(map_level, start, dest)
+	print('Generated path')
+	prev_pt = start
+
+
+	hops = 0
+	current_pts = []
+
+	for pt in path:
+		mapview = map_color.copy()
+		#img = mapgrid.copy()
+		y = pt[1]
+		x = pt[0]
+		img[int(y), int(x)] = 0
+		x0, y0 = prev_pt
+		#print('prev_pt', )
+
+		delx = x- x0
+		dely = y - y0
+		#print('delta: ',delx, dely)
+
+		if delx >= 1 and dely >= 1:
+			angle = 135
+		elif delx == 0 and dely ==1:
+			angle = 180
+
+
+		else:
+			angle = 30
+
+		prev_pt = x, y
+		draw_angled_rec(x, y, car_width, car_height, angle, mapview)
+		
+
+		cv.imshow('a', mapview)
+		cv.waitKey(2)
+		#cv.imshow('vectors ongrid', grid)
+		#cv.waitKey(2)
+
+		#print(pt)
+
+		current_pts.append(pt)
+		hops+=1
+		if(hops % 15 == 0):
+			print('vectorising')
+			x1, y1 = last_pt = current_pts[len(current_pts) -1]
+			x0, y0 = first_pt = current_pts[0]
+			theta = np.arctan((y1 - y0) / ((x1 - x0) + 1e-9)) * 180/ (np.pi)
+			if theta < 0:
+				theta+=180
+			print('<x_h, y_h> = ', '<', (x0),',',(y0),'>')
+			pts.append((x0, y0))
+			print(round(theta-45, 3), '°')
+			angles.append(round(theta-45, 3))
+			cv.line(map_color, first_pt, last_pt, (255, 0, 0), 2)
+
+			current_pts = []
+
+
+
+def generate_test_cases():
+	test = np.zeros((dimX, dimY, 3), np.uint8)
+
+	test = cv.bitwise_not(test)
+
+	obstacles3 = [(x, y) for x, y in zip(list(np.random.randint(dimX, size=(num))),list(np.random.randint(dimY, size=(num))))]
+
+	# costs1 = list(np.random.uniform(0, 1, 10))
+	# costs2 = [10, 10, 9, 7, 7, 7, 7, 4, 3, 3, 3, 4, 6 ,6, 3, 6, 6]
+
+	obstacles = obstacles3
+	radii = []
+
+	for obst in obstacles3:
+		radius = np.random.randint(4, 42-car_diagonal)
+		#cv.circle(test, obst, int(10+car_diagonal), (0, 0, 0), -1)
+		cv.circle(test, obst, int(radius+car_diagonal), (0, 0, 0), -1)
+		radii.append(radius)
+
+	test_grid = cv.cvtColor(test, cv.COLOR_BGR2GRAY)
+	# FINDING START AND END POINT
+
+	start_x = np.random.randint(dimX)
+	start_y = np.random.randint(dimX)
+	start = start_x, start_y
+	while (test_grid[start_y, start_x] != 255 ):
+		start_x, start_y = random.sample(range(0, dimY), 2)
+		print('iterating start')
+		start = start_x, start_y
+
+	dest_x, dest_y = random.sample(range(0, dimY), 2)
+	dest = dest_x, dest_y
+	while (test_grid[dest_y, dest_x] != (255) or  euclid_dist(start, dest) < 0.7* dimX):
+		dest_x, dest_y = random.sample(range(0, dimY), 2)
+		print('iterating dest')
+		dest = dest_x, dest_y
+
+	print(obstacles3)
+	print('Start :', start)
+	print('End : ', dest)
+	plt.imshow(test)
+	plt.show()
+	#car_move(test, start, dest)
+	display_tests(test, start, dest)
+	cv.imwrite('test_easy1.jpg', img)
 
 #easy_level()
 hard_level()
 
+#generate_test_cases()
 print(pts)
 print(angles)
 
