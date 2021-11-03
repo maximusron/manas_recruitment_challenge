@@ -22,14 +22,15 @@ obstacles2 = [(120, 240), (163, 309), (250, 300), (338, 99), (120, 120), (201, 1
 obstacles3 = [(304, 285), (20, 372), (340, 217), (203, 73), (81, 81), (77, 160), (344, 88), (311, 19), (9, 56), (381, 365), (213, 52), (77, 301)]
 obstacles4 = [(196, 83), (266, 233), (118, 361), (58, 28), (288, 136), (388, 276), (25, 198), (57, 373), (55, 173), (247, 277), (343, 244), (23, 333), (350, 171), (87, 263), (175, 117), (154, 123), (194, 228), (358, 362), (79, 81), (106, 21)]
 obstacles5 = [(35, 312), (356, 41), (50, 46), (209, 316), (225, 272), (354, 283)]
+obstacles6 =  [(14, 193), (233, 374), (202, 171), (237, 372), (393, 75), (133, 262), (300, 29), (28, 60), (324, 241), (374, 374), (95, 387), (5, 370), (162, 20), (199, 115), (259, 143), (165, 244), (300, 126), (317, 227), (190, 129), (357, 377), (159, 286), (271, 189)]
 
-num = 17
+num = 23
 obstacles3 = [(x, y) for x, y in zip(list(np.random.randint(dimX, size=(num))),list(np.random.randint(dimY, size=(num))))]
 
 costs1 = list(np.random.uniform(0, 1, 10))
 costs2 = [10, 10, 9, 7, 7, 7, 7, 4, 3, 3, 3, 4, 6 ,6, 3, 6, 6]
 
-obstacles = obstacles2
+obstacles = obstacles6
 costs = costs1
 
 for obst in obstacles:
@@ -329,19 +330,22 @@ def generate_test_cases():
 		print('iterating dest')
 		dest = dest_x, dest_y
 
-	print(obstacles3)
+	print('car_width', car_width)
+	print('car_height', car_height)
+	print('Obstacles', obstacles3)
+	print('Radii', radii)
 	print('Start :', start)
 	print('End : ', dest)
 	plt.imshow(test)
 	plt.show()
 	#car_move(test, start, dest)
 	display_tests(test, start, dest)
-	cv.imwrite('test_easy1.jpg', img)
+	#cv.imwrite('test_easy1.jpg', img)
 
 #easy_level()
-hard_level()
+#hard_level()
 
-#generate_test_cases()
+generate_test_cases()
 print(pts)
 print(angles)
 
