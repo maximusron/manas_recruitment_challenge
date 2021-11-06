@@ -5,29 +5,26 @@ import string
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from numpy.lib.function_base import gradient
 
 
-# def generate_map(obstacles, radii, costs):
-#     grid = np.zeros((400, 400))
-#     grid = cv.bitwise_not(gridsrc)
-#     for obst, radius, cost in  zip(obstacles, radii, costs):
-#         cv.circle(grid, obst, radius + int(car_diagonal/2), costs/10, -1)
-#         i+=1
-#     return grid
+
 obstacles = []
 car_diagonal = 0
-def generate_map_easy(obstacles, car_diagonal):
+grid = []
+def generate_map_hard(obstacles, car_diagonal):
     grid = np.zeros((400, 400))
     # grid = cv.bitwise_not(gridsrc)
     for obst in obstacles:
-        cv.circle(grid, (obst[0],obst[1]), obst[2] + int(car_diagonal/2), 1, -1)
+        cv.circle(grid, (obst[0],obst[1]), obst[2] + int(car_diagonal/2), obst[3]/10, -1)
     return grid
+
 
 def run_custom_checker():
     # Don't print anything to STDOUT in this function
     # Enter your custom checker scoring logic here
 
-    # obstacles = []
+    # obstacles = []    
     vectorised_path=[]
     vectorised_path_expected = []
     
@@ -36,7 +33,7 @@ def run_custom_checker():
     thetas = []
     thetas_expected = []
 
-    input_path = 'C:/Users/MaximusX/Desktop/manas_recruitment_challenge/input00.txt'
+    input_path = 'C:/Users/MaximusX/Desktop/manas_recruitment_challenge/input00_hard.txt'
     count = len(open(input_path).readlines())
     # print(count)
     with open(input_path,'r') as fil:
@@ -49,7 +46,6 @@ def run_custom_checker():
         car_width, car_height = float(car_dims[0]), float(car_dims[1])
         vector_mag = float(lines[3])
         num_obstacles = int(lines[4])
-        # print(num_obstacles)
         car_diagonal = (car_width**2 + car_height**2)**0.5
         for i in range(5, 5+num_obstacles):
             nums = lines[i].strip().split(' ')
@@ -57,14 +53,13 @@ def run_custom_checker():
             for x in nums:
                 if(x !=''):
                     vector.append(int(x))
-                if len(vector) == 3:
-                    x,y,r = vector[0], vector[1], vector[2]
-                    obstacles.append((x,y,r))
+                if len(vector) == 4:
+                    x,y,r,c = vector[0], vector[1], vector[2], vector[3]
+                    obstacles.append((x,y,r,c))
              
     with open('output00.txt','r') as fil:
         lines=fil.readlines()
         for line in lines:
-            # x,y,theta=map(float,line.strip().split(' '))
             nums = line.strip().split(' ')
             vector = []
             for x in nums:
@@ -77,6 +72,8 @@ def run_custom_checker():
                 pts.append((x, y))
                 thetas.append(theta)
     num_points = 0
+    grid_parsed = []
+
     with open('expected_output00.txt','r') as fil:
         lines=fil.readlines()
         for line in lines:
@@ -92,7 +89,7 @@ def run_custom_checker():
                 vectorised_path_expected.append((x,y,theta))
                 pts_expected.append((x, y))
                 thetas_expected.append(theta)
-                num_points = num_points + 1
+                num_points = num_points+1
 
     with open('expected_output00.txt','r') as fil:
         lines=fil.readlines()
@@ -104,7 +101,14 @@ def run_custom_checker():
                 if(x != ''):
                     row[i] = float(x)
             grid_parsed.append(row)
-    print(np.array(grid_parsed).shape)  
+    print(np.array(grid_parsed).shape)        
+
+    
+
+            
+
+    
+
     
     close_waypoints = 0
     close_thetas = 0
@@ -136,8 +140,7 @@ def run_custom_checker():
         # print("Vector mag")
         # print(vector_mag)
         # print("Obstacles")
-        # for k in obstacles:
-        #     print(k)
+        # print(obstacles)
     #     r_obj.score = 0.8 * float(close_waypoints/len(pts_expected)) + 0.2 * float(close_thetas/len(thetas_expected))
     #     score=close_waypoints/len(pts_expected)
 
@@ -163,16 +166,9 @@ def run_custom_checker():
 
 # End of BODY
 run_custom_checker()
-# print(obstacles)
-grid = generate_map_easy(obstacles, car_diagonal)
+grid = generate_map_hard(obstacles, car_diagonal)
 plt.imshow(grid)
 plt.show()
-mat = np.matrix(grid)
-with open('outfile.txt','wb') as f:
-    for line in mat:
-        np.savetxt(f, line, fmt='%.2f')
-
-
 # print(grid)
 # k = input()
         
