@@ -114,17 +114,17 @@ def run_custom_checker():
             if(delta_theta < 3.5):
                 close_thetas +=1
 
-        print("start points")
-        print(start_points)
-        print("End points")
-        print(end_points)
-        print("car dims")
-        print(car_dims)
-        print("Vector mag")
-        print(vector_mag)
-        print("Obstacles")
-        for k in obstacles:
-            print(k)
+        # print("start points")
+        # print(start_points)
+        # print("End points")
+        # print(end_points)
+        # print("car dims")
+        # print(car_dims)
+        # print("Vector mag")
+        # print(vector_mag)
+        # print("Obstacles")
+        # for k in obstacles:
+        #     print(k)
     #     r_obj.score = 0.8 * float(close_waypoints/len(pts_expected)) + 0.2 * float(close_thetas/len(thetas_expected))
     #     score=close_waypoints/len(pts_expected)
 
@@ -154,5 +154,10 @@ run_custom_checker()
 grid = generate_map_easy(obstacles, car_diagonal)
 plt.imshow(grid)
 plt.show()
-
+mat = np.matrix(grid)
+with open('outfile.txt','wb') as f:
+    for line in mat:
+        np.savetxt(f, line, fmt='%.2f')
+# print(grid)
+# k = input()
         
