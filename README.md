@@ -1,3 +1,5 @@
+## EASY
+
 It's time for Project MANAS to upgrade their PC parts but unfortunately they cannot be shipped to us. AI members Ishika and Aryan decide that they would drive down to the seller and collect it themselves. Since both of them do not have a driving licence it's up to EVE, our self driving car to take them to their destined location. 
 
 
