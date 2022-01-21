@@ -12,7 +12,7 @@ Note that you will be penalised for vectors that enter obstacle zones as well as
 
 ![image](https://s3.amazonaws.com/hr-assets/0/1636193192-e7e01e1b8b-Screenshotfrom2021-11-0615-28-08.png)
 
-###Input Format
+### Input Format
 
 x<sub>1</sub>,  y<sub>1</sub> - Start coordinates
 
@@ -26,7 +26,7 @@ n - Number of obstacles
 
 x<sub>i</sub>,  y<sub>i</sub>,  r<sub>i</sub> - Obstacle locations and radius
 
-###Constraints
+### Constraints
 
 (0, 0) < x<sub>1</sub>,  y<sub>1</sub> < (400, 400)
 
@@ -42,7 +42,8 @@ x<sub>i</sub>,  y<sub>i</sub>,  r<sub>i</sub> - Obstacle locations and radius
 
 (0, 0) < x<sub>i</sub>, y<sub>i</sub> < (400, 400)
 
-Output Format
+### Output Format
+
 A list of vectors representing the traversed path in terms of tail coordinates and heading angle. Each vector has the format:
 
 x<sub>j</sub>, y<sub>j</sub>, &theta;<sub>j</sub>
