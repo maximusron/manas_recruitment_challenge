@@ -49,3 +49,49 @@ A list of vectors representing the traversed path in terms of tail coordinates a
 x<sub>j</sub>, y<sub>j</sub>, &theta;<sub>j</sub>
 
 Where x<sub>j</sub>, y<sub>j</sub> is the position and  &theta;<sub>j</sub> is the angle (with respect to the x-axis) of the j<sup>th</sup> vector.
+
+## HARD
+
+In this question, each obstacle has a predefined traversability value (or 'cost') between 1 and 10. For example, shallow puddles can quite easily be passed (they have low cost = 1), sand is more difficult but still traversable, while rocks are impossible to pass through (with the highest cost = 10). Since EVE has sensitive electronic components, driving over difficult obstacles can cause a lot of damage to our club's hard work (and yearly budget).
+
+Avoiding all obstacles which are impossible to pass through (with cost = 10), find an optimum path that causes least damage to EVE. Don't forget that EVE also has low charge, so a very long path is not a great idea!
+
+### Input Format
+
+x1, y1 - Start coordinates
+
+x2, y2 - End coordinates
+
+l, w- Car dimensions
+
+m - Vector magnitude
+
+n - Number of obstacles
+
+xi, yi, ri, costi - Obstacle locations (x,y), radius, and cost
+
+### Constraints
+
+(0, 0) < x1, y1 < (400, 400)
+
+(0, 0) < x2, y2 < (400, 400)
+
+(5, 10) < w,l < (20, 30)
+
+10 < m < 50
+
+7 < n < 50
+
+(0, 0) < xi, yi < (400, 400)
+
+1 < ri < 42
+
+0 < costi < 10
+
+### Output Format
+
+A list of vectors representing the traversed path in terms of tail coordinates and heading angle. Each vector has the format:
+
+xj, yj, θj
+
+Where xj, yj is the position and θj is the angle (with respect to the x-axis) of the jth vector.
