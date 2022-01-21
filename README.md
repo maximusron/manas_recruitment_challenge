@@ -12,7 +12,8 @@ Note that you will be penalised for vectors that enter obstacle zones as well as
 
 ![image](https://s3.amazonaws.com/hr-assets/0/1636193192-e7e01e1b8b-Screenshotfrom2021-11-0615-28-08.png)
 
-Input Format
+###Input Format
+
 x<sub>1</sub>,  y<sub>1</sub> - Start coordinates
 
 x<sub>2</sub>,  y<sub>2</sub> - End coordinates
@@ -25,7 +26,8 @@ n - Number of obstacles
 
 x<sub>i</sub>,  y<sub>i</sub>,  r<sub>i</sub> - Obstacle locations and radius
 
-Constraints
+###Constraints
+
 (0, 0) < x<sub>1</sub>,  y<sub>1</sub> < (400, 400)
 
 (0, 0) < x<sub>2</sub>,  y<sub>2</sub> < (400, 400)
